@@ -1,6 +1,6 @@
 # Dayls-team-project | Lunch meet for recruiters/ job seekers
 
-This project is a website that allow jobseekers and recruiters to have a chance to understand more about each other.
+Lunch Meet is a video-conferencing networking platform. This project is a website that allow jobseekers and recruiters to have a chance to understand more about each other.
 
 ## Thechnologies:
 
