@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Lunch Meet</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+  {% block head %}
+  {% endblock %}
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+  <Main>
+    {% block content %}
+    {% endblock %}
+  </Main>
+</body>
+</html>
