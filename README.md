@@ -6,6 +6,7 @@ Lunch Meet is a video-conferencing networking platform. This project is a websit
 
 - Flask -  A python based server-side architecture used for url routing.
 - Jinja2 - A front-end templating library compatible with flask.
+- Firebase - A Backend-as-a-Service used for user authentication and realtime database.
 
 ## Usage:
 
