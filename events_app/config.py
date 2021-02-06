@@ -4,7 +4,6 @@ import os
 
 class Config(object):
     """Set environment variables."""
-    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
     API_KEY = os.getenv("API_KEY")
     AUTH_DOMAIN= os.getenv("AUTH_DOMAIN")
     DATABASE_URL=os.getenv("DATABASE_URL")
