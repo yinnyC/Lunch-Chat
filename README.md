@@ -1,19 +1,19 @@
-# Dayls-team-project | Lunch meet for recruiters/ job seekers
+# Dayls-team-project | Lunch meet for recruiters and job seekers
 
-Lunch Meet is a video-conferencing networking platform. This project is a website that allow jobseekers and recruiters to have a chance to understand more about each other.
+Lunch Meet is a video conferencing networking tool that will change the way gradualting engineers connect with tech recruiters. This project is a platform that allows studens to schedule quick and informal meetings on recruiter's calendars. 
 
-## Thechnologies:
+## Technologies:
 
 - Flask -  A python based server-side architecture used for url routing.
 - Jinja2 - A front-end templating library compatible with flask.
 - Firebase - A Backend-as-a-Service used for user authentication and realtime database.
 
-## Usage:
+## Use:
 
-Check out the [link]() here to get into the website
+Click [here]() to visit the website
 
-## Roadmap
+## Roadmap:
 
 | Skateboard (1 feature) | Bike (2nd feature)     | Car (Extras)           |
 | :--------------------- | :--------------------- | :--------------------- |
-| Build a login system and allow users to create profile | Allow users to schedule meetings | Allow users to browse all the other recruiters and job seekers. |
+| Build a login system and allow users and recruiters to create a profile, using a step by step profile builder | Allow users to select time slots on recruiters calendars, and recruiters to set up availability on their calendars | Allow users and recruiters to browse public user profiles |
