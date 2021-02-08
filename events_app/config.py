@@ -3,4 +3,3 @@ import os
 
 class Config(object):
     """Set environment variables."""
-
