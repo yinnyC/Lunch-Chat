@@ -41,4 +41,4 @@ Below is the struture of our project and I'll go on the explain what each folder
   - __init__.py: we initialize the flask app here and load in the config object here.
   - config.py: where you load in the data from the .env file
 - .env: where you put in data that should be uploaded onto github
-- app.py: to test out your code, run this file
+- app.py: to test out your code, run this file.
