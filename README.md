@@ -1,6 +1,6 @@
 # Dayls-team-project | Lunch meet for recruiters and job seekers
 
-Lunch Meet is a video conferencing networking tool that will change the way graduating computer engineers connect with tech recruiters. This project is a platform that allows studens to schedule quick and informal meetings on recruiter's calendars. 
+Lunch Chat is a video conferencing networking tool that will change the way graduating computer engineers connect with tech recruiters. This project is a platform that allows studens to schedule quick and informal meetings on recruiter's calendars. 
 
 ## Technologies:
 
