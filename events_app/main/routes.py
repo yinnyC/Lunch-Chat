@@ -3,12 +3,9 @@ import os
 from flask import Blueprint, request, render_template, redirect, url_for,session
 
 # Import app and db from events_app package so that we can run app
-from events_app import app,auth
-
+from events_app import app,auth,firebase
+print(os.environ.get('DATABASE_URL'))
 main = Blueprint("main", __name__)
-
-# firebase = pyrebase.initialize_app(config)
-# auth = firebase.auth()
 
 ##########################################
 #           Routes                       #
@@ -52,9 +49,16 @@ def login():
 
     return render_template('signup.html')
 
-@app.route('/reset_password')
+@main.route('/reset_password')
 def reset():
     token = session['user']
     # Sending Password reset email
     reset_email = auth.send_password_reset_email("Parasmani300@gmail.com")
     return render_template("index.html")
+
+@main.route('/add_sth')
+def addSth():
+    data = {"name": "Mortimer 'Morty' Smith"}
+    firebase.database().child("users").push(data)
+    print('data inserted')
+    return render_template('/index.html')
