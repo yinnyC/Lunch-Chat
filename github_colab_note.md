@@ -1,21 +1,33 @@
 # Github Colaborate Note
 
-1. git pull
-2. git checkout -b <branchName>
-3. Make your changes
-4. git add .  {if you det an error try replacing the '.' for the file name }
-5. git commit -m "message"
-6. git push -u origin <branchName>
+## How to create a new branch
 
+If you get an error while running `git add .` try replacing the '.' for the file name.
 
-## Merging it back to main | let Andrea know when you're done 
+    git pull
+    git checkout -b <branchName>
+    Make your changes
+    git add .  
+    git commit -m "message"
+    git push -u origin <branchName>
 
-1. git checkout main
-2. git merge <branchName>
-3. git status - to check the changes
-4. git log - will allow you to check all the commits
-5. git commit -m "message"
-6. git push
+## Merging it back to main
 
-## to see what branches are on the project
-1. git branch -a  git  
+let Andrea know when you're done
+
+    git checkout main
+    git merge <branchName>
+    git status - to check the changes
+    git log - will allow you to check all the commits
+    git commit -m "message"
+    git push
+
+## Other Git Command
+
+To see what branches are on the project
+
+    git branch
+
+To delete a branch, use it after merging
+
+    git branch -d <branchName>
