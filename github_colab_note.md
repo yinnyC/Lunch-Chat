@@ -15,3 +15,6 @@
 4. git log - will allow you to check all the commits
 5. git commit -m "message"
 6. git push
+
+## to see what branches are on the project
+1. git branch -a  git  
