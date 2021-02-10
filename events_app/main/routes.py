@@ -18,10 +18,10 @@ def homepage():
     """
     return render_template('signup.html')
 
-
 @main.route('/signup', methods=["GET", "POST"])
 def signup():
     """Return signup template."""
+<<<<<<< HEAD
     try:
         user = auth.create_user_with_email_and_password(
             "yinnnnnnnn@gmail.com", "1234567")
@@ -32,6 +32,26 @@ def signup():
 
 
 @main.route('/login', methods=["GET", "POST"])
+=======
+    if request.method == "GET":
+        return '''
+               <form action='signup' method='POST'>
+                <input type='text' name='email' id='email' placeholder='email'/>
+                <input type='password' name='password' id='password' placeholder='7 character minimum'/>
+                <input type='submit' name='submit'/>
+               </form>
+               '''
+    elif request.method == "POST":
+        try:
+            email = request.form.get("email")
+            password = request.form.get("password")
+            signup_user = auth.create_user_with_email_and_password(email, password)
+            print("account created!")
+        except:
+            print("could not sign up")
+        return render_template('signup.html')
+@main.route('/login')
+>>>>>>> a0cc3f64705fb64c79ce62e8eb992b90d61e4ca4
 def login():
     """ Return login template."""
     if request.method == "GET":
