@@ -14,7 +14,6 @@ firebase_config = {
     "messagingSenderId": os.getenv("MESSAGING_SENDER_ID"),
     "appId": os.getenv("APP_ID")
 }
-
 firebase = pyrebase.initialize_app(firebase_config)
 auth = firebase.auth()
 
