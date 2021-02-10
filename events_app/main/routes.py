@@ -22,9 +22,7 @@ def homepage():
 @main.route('/signup', methods=["GET", "POST"])
 def signup():
     """Return signup template."""
-    # ! check if it's a post request, you can see login route for reference
     try:
-        # ! request data from front-end
         user = auth.create_user_with_email_and_password(
             "yinnnnnnnn@gmail.com", "1234567")
 
@@ -37,13 +35,7 @@ def signup():
 def login():
     """ Return login template."""
     if request.method == "GET":
-        return '''
-               <form action='login' method='POST'>
-                <input type='text' name='email' id='email' placeholder='email'/>
-                <input type='password' name='password' id='password' placeholder='password'/>
-                <input type='submit' name='submit'/>
-               </form>
-               '''
+        return render_template('login.html')
     elif request.method == "POST":
         try:
             email = request.form.get("email")
