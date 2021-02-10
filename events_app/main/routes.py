@@ -99,7 +99,7 @@ def addSth():
                     | - data you want to safe
         """
         collection = "profile"
-        firebase.database().child(collection).child("user").push(data)
+        firebase.database().child(collection).child(user).push(data)
         print('data inserted')
         return render_template('/index.html')
     else:
