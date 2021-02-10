@@ -22,7 +22,6 @@ def homepage():
 @main.route('/signup', methods=["GET", "POST"])
 def signup():
     """Return signup template."""
-
     # ! check if it's a post request, you can see login route for reference
     try:
         # ! request data from front-end
@@ -68,30 +67,41 @@ def logout():
     return redirect(url_for("main.homepage"))
 
 
-@main.route('/reset_password')
-def reset():
-    token = session['user']
-    # Sending Password reset email
-    reset_email = auth.send_password_reset_email("Parasmani300@gmail.com")
-    print("Please check your email to reset the password")
-    return render_template("index.html")
+@main.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == "GET":
+        return '''
+               <form action='/reset_password' method='POST'>
+                <input type='text' name='email' id='email' placeholder='email'/>
+                <input type='submit' name='submit'/>
+               </form>
+               '''
+    elif request.method == "POST":
+        # Sending Password reset email
+        user_email = request.form.get("email")
+        reset_email = auth.send_password_reset_email(user_email)
+        print("Please check your email to reset the password")
+        return render_template("index.html")
 
 
 @main.route('/add_sth')
 def addSth():
     """ The function can write data into certain collection and user uid"""
-    data = {"name": "Mortimer 'Morty' Smith"}
-    # To access to the currenr user's uid
-    token = session['user']
-    user = auth.get_account_info(token)['users'][0]['localId']
-    """
-    The structure in database should be
-    | - project name <lunch chat>
-      - | collection
-          - | user's uid
-              - data you want to safe
-    """
-    collection = "profile"
-    firebase.database().child(collection).child("user").push(data)
-    print('data inserted')
-    return render_template('/index.html')
+    if session['user']:  # Check if user has logged in yet
+        token = session['user']  # To access to the currenr user's uid
+        user = auth.get_account_info(token)['users'][0]['localId']
+        data = {"name": "Mortimer 'Morty' Smith"}
+        """
+        The structure of the database should be
+        | - project name <lunch chat>
+            | - collection
+                | - user's uid
+                    | - data you want to safe
+        """
+        collection = "profile"
+        firebase.database().child(collection).child("user").push(data)
+        print('data inserted')
+        return render_template('/index.html')
+    else:
+        print("You need to log in first")
+        return redirect(url_for("main.homepage"))
