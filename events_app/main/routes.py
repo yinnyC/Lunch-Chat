@@ -23,9 +23,9 @@ def homepage():
 def signup():
     """Return signup template."""
 
-    # check if it's a post request
+    # ! check if it's a post request, you can see login route for reference
     try:
-        # request data from front-end
+        # ! request data from front-end
         user = auth.create_user_with_email_and_password(
             "yinnnnnnnn@gmail.com", "1234567")
 
@@ -36,7 +36,7 @@ def signup():
 
 @main.route('/login', methods=["GET", "POST"])
 def login():
-    """Return login template."""
+    """ Return login template."""
     if request.method == "GET":
         return '''
                <form action='login' method='POST'>
@@ -51,15 +51,21 @@ def login():
             password = request.form.get("password")
             # To sign in user using email and password
             sign_user = auth.sign_in_with_email_and_password(email, password)
-            # before the 1 hour expiry:
             sign_user = auth.refresh(sign_user['refreshToken'])
-            # now we have a fresh token
             session['user'] = sign_user['idToken']
             print("sign In Successfull")
         except:
             print("Some thing happend!! could not sign in")
 
         return render_template('signup.html')
+
+
+@main.route('/logout')
+def logout():
+    """ remove the current from the session """
+    session.pop('user', None)
+    print('You have been logged out')
+    return redirect(url_for("main.homepage"))
 
 
 @main.route('/reset_password')
