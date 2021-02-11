@@ -21,18 +21,6 @@ def homepage():
 @main.route('/signup', methods=["GET", "POST"])
 def signup():
     """Return signup template."""
-<<<<<<< HEAD
-    try:
-        user = auth.create_user_with_email_and_password(
-            "yinnnnnnnn@gmail.com", "1234567")
-
-    except:
-        print("could not sign up")
-    return render_template('signup.html')
-
-
-@main.route('/login', methods=["GET", "POST"])
-=======
     if request.method == "GET":
         return '''
                <form action='signup' method='POST'>
