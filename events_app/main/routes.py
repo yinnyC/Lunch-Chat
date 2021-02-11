@@ -38,8 +38,8 @@ def signup():
         except:
             print("could not sign up")
         return render_template('signup.html')
+    
 @main.route('/login')
->>>>>>> a0cc3f64705fb64c79ce62e8eb992b90d61e4ca4
 def login():
     """ Return login template."""
     if request.method == "GET":
