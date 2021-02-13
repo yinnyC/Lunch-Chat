@@ -58,8 +58,17 @@ def login():
             print("sign In Successfull")
         except:
             print("Some thing happend!! could not sign in")
+        return redirect(url_for("main.user_main"))
 
-        return render_template('index.html')
+
+@main.route('/user_main')
+def user_main():
+    if session['user']:
+        print("yay")
+        return render_template('user_main.html')
+    else:
+        print("please login first")
+        return redirect(url_for("main.homepage"))
 
 
 @main.route('/logout', methods=["GET", "POST"])
