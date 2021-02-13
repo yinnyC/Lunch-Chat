@@ -40,9 +40,14 @@ def signup():
         except:
             print("could not sign up")
         return render_template('signup.html')
+<<<<<<< HEAD
 
 
 @main.route('/login', methods=["GET", "POST"])
+=======
+    
+@main.route('/login')
+>>>>>>> 22fdc9a5a6980f25e66e0c9ef2e7c92f5a8863dc
 def login():
     """ Return login template."""
     if request.method == "GET":
