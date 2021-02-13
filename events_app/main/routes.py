@@ -148,3 +148,36 @@ def create_student_profile():
     else:
         print("You need to log in first")
         return redirect(url_for("main.homepage"))
+
+@main.route('/update_student_profile', methods=['GET', 'POST'])
+def update_student_profile():
+    """ The function can update data for the student profile """
+    if session['user']:
+        if request.method == "GET":
+            return '''
+                <form action='/update_student_profile' method='POST'>
+                        <input type='text' name='first_name' id='first_name' placeholder='first_name'/>
+                        <input type='text' name='last_name' id='last_name' placeholder='last_name'/>
+                        <input type='text' name='school' id='school' placeholder='school'/>
+                        <input type='text' name='concentration' id='concentration' placeholder='concentration'/>
+                        <input type='submit' name='submit'/>
+                    </form>
+                    '''
+
+        elif request.method == "POST":
+            data = {
+                    "first_name": request.form.get("first_name"),
+                    "last_name": request.form.get("last_name"),
+                    "school": request.form.get("school"),
+                    "concentration": request.form.get("concentration")
+                }
+            token = session['user']
+            user = auth.get_account_info(token)['user'][0]['LocalId']
+            collection = "student_profile"
+            firebase.database().child(collection).child(user).update(data)
+            print('data updated!')
+            return render_template('/index.html')
+            
+    else:
+        print("You have to be logged in first!")
+        return redirect(url_for("main.homepage"))
