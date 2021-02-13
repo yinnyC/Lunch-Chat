@@ -16,7 +16,7 @@ def homepage():
     """
     Return template for home.
     """
-    return render_template('signup.html')
+    return render_template('index.html')
 
 
 @main.route('/signup', methods=["GET", "POST"])
@@ -39,15 +39,10 @@ def signup():
             print("account created!")
         except:
             print("could not sign up")
-        return render_template('signup.html')
-<<<<<<< HEAD
+        return render_template('index.html')
 
 
 @main.route('/login', methods=["GET", "POST"])
-=======
-    
-@main.route('/login')
->>>>>>> 22fdc9a5a6980f25e66e0c9ef2e7c92f5a8863dc
 def login():
     """ Return login template."""
     if request.method == "GET":
@@ -64,7 +59,7 @@ def login():
         except:
             print("Some thing happend!! could not sign in")
 
-        return render_template('signup.html')
+        return render_template('index.html')
 
 
 @main.route('/logout', methods=["GET", "POST"])
@@ -110,6 +105,37 @@ def addSth():
         firebase.database().child(collection).child(user).push(data)
         print('data inserted')
         return render_template('/index.html')
+    else:
+        print("You need to log in first")
+        return redirect(url_for("main.homepage"))
+
+
+@main.route('/create_student_profile', methods=['GET', 'POST'])
+def create_student_profile():
+    if session['user']:  # Check if user has logged in yet
+        if request.method == "GET":
+            return '''
+                <form action='/create_student_profile' method='POST'>
+                    <input type='text' name='first_name' id='first_name' placeholder='first_name'/>
+                    <input type='text' name='last_name' id='last_name' placeholder='last_name'/>
+                    <input type='text' name='school' id='school' placeholder='school'/>
+                    <input type='text' name='concentration' id='concentration' placeholder='concentration'/>
+                    <input type='submit' name='submit'/>
+                </form>
+                '''
+        elif request.method == "POST":
+            data = {
+                "first_name": request.form.get("first_name"),
+                "last_name": request.form.get("last_name"),
+                "school": request.form.get("school"),
+                "concentration": request.form.get("concentration")
+            }
+            token = session['user']  # To access to the currenr user's uid
+            user = auth.get_account_info(token)['users'][0]['localId']
+            collection = "student_profile"
+            firebase.database().child(collection).child(user).push(data)
+            print('data inserted')
+            return render_template('/index.html')
     else:
         print("You need to log in first")
         return redirect(url_for("main.homepage"))
