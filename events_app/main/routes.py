@@ -18,21 +18,10 @@ def homepage():
     """
     return render_template('signup.html')
 
+
 @main.route('/signup', methods=["GET", "POST"])
 def signup():
     """Return signup template."""
-<<<<<<< HEAD
-    try:
-        user = auth.create_user_with_email_and_password(
-            "yinnnnnnnn@gmail.com", "1234567")
-
-    except:
-        print("could not sign up")
-    return render_template('signup.html')
-
-
-@main.route('/login', methods=["GET", "POST"])
-=======
     if request.method == "GET":
         return '''
                <form action='signup' method='POST'>
@@ -45,13 +34,15 @@ def signup():
         try:
             email = request.form.get("email")
             password = request.form.get("password")
-            signup_user = auth.create_user_with_email_and_password(email, password)
+            signup_user = auth.create_user_with_email_and_password(
+                email, password)
             print("account created!")
         except:
             print("could not sign up")
         return render_template('signup.html')
-@main.route('/login')
->>>>>>> a0cc3f64705fb64c79ce62e8eb992b90d61e4ca4
+
+
+@main.route('/login', methods=["GET", "POST"])
 def login():
     """ Return login template."""
     if request.method == "GET":
@@ -71,7 +62,7 @@ def login():
         return render_template('signup.html')
 
 
-@main.route('/logout')
+@main.route('/logout', methods=["GET", "POST"])
 def logout():
     """ remove the current from the session """
     session.pop('user', None)
