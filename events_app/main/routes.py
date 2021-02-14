@@ -1,6 +1,6 @@
 """Import packages and modules."""
 import os
-from flask import Blueprint, request, render_template, redirect, url_for, session
+from flask import Blueprint, request, render_template, redirect, url_for, session, flash
 
 # Import app and db from events_app package so that we can run app
 from events_app import app, auth, firebase
@@ -23,13 +23,7 @@ def homepage():
 def signup():
     """Return signup template."""
     if request.method == "GET":
-        return '''
-               <form action='signup' method='POST'>
-                <input type='text' name='email' id='email' placeholder='email'/>
-                <input type='password' name='password' id='password' placeholder='7 character minimum'/>
-                <input type='submit' name='submit'/>
-               </form>
-               '''
+        return render_template("signup.html")
     elif request.method == "POST":
         try:
             email = request.form.get("email")
@@ -37,9 +31,12 @@ def signup():
             signup_user = auth.create_user_with_email_and_password(
                 email, password)
             print("account created!")
+            flash("account created!")
+            return render_template('login.html')
         except:
             print("could not sign up")
-        return render_template('index.html')
+            error = "could not sign up"
+            return render_template('signup.html', error=error)
 
 
 @main.route('/login', methods=["GET", "POST"])
@@ -55,20 +52,13 @@ def login():
             sign_user = auth.sign_in_with_email_and_password(email, password)
             sign_user = auth.refresh(sign_user['refreshToken'])
             session['user'] = sign_user['idToken']
-            print("sign In Successfull")
+            print("sign In Successfully")
+            flash("sign In Successfully")
+            return redirect(url_for("main.student_main"))
         except:
             print("Some thing happend!! could not sign in")
-        return redirect(url_for("main.user_main"))
-
-
-@main.route('/user_main')
-def user_main():
-    if session['user']:
-        print("yay")
-        return render_template('user_main.html')
-    else:
-        print("please login first")
-        return redirect(url_for("main.homepage"))
+            error = "Some thing happend!! could not sign in"
+            return render_template('login.html', error=error)
 
 
 @main.route('/logout', methods=["GET", "POST"])
@@ -82,18 +72,14 @@ def logout():
 @main.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
     if request.method == "GET":
-        return '''
-               <form action='/reset_password' method='POST'>
-                <input type='text' name='email' id='email' placeholder='email'/>
-                <input type='submit' name='submit'/>
-               </form>
-               '''
+        return render_template('forgot_password.html')
     elif request.method == "POST":
         # Sending Password reset email
         user_email = request.form.get("email")
         reset_email = auth.send_password_reset_email(user_email)
         print("Please check your email to reset the password")
-        return render_template("index.html")
+        flash("Please check your email to reset the password")
+        return render_template('forgot_password.html')
 
 
 @main.route('/add_sth')
@@ -116,6 +102,16 @@ def addSth():
         return render_template('/index.html')
     else:
         print("You need to log in first")
+        return redirect(url_for("main.homepage"))
+
+
+@main.route('/student_main')
+def student_main():
+    if session['user']:
+        # insert the demo user profile feature here
+        return render_template('student_main.html')
+    else:
+        print("please login first")
         return redirect(url_for("main.homepage"))
 
 
@@ -144,10 +140,12 @@ def create_student_profile():
             collection = "student_profile"
             firebase.database().child(collection).child(user).push(data)
             print('data inserted')
-            return render_template('/index.html')
+            return redirect(url_for("main.student_main"))
+
     else:
         print("You need to log in first")
         return redirect(url_for("main.homepage"))
+
 
 @main.route('/update_student_profile', methods=['GET', 'POST'])
 def update_student_profile():
@@ -166,18 +164,18 @@ def update_student_profile():
 
         elif request.method == "POST":
             data = {
-                    "first_name": request.form.get("first_name"),
-                    "last_name": request.form.get("last_name"),
-                    "school": request.form.get("school"),
-                    "concentration": request.form.get("concentration")
-                }
+                "first_name": request.form.get("first_name"),
+                "last_name": request.form.get("last_name"),
+                "school": request.form.get("school"),
+                "concentration": request.form.get("concentration")
+            }
             token = session['user']
-            user = auth.get_account_info(token)['user'][0]['LocalId']
+            user = auth.get_account_info(token)['users'][0]['localId']
             collection = "student_profile"
             firebase.database().child(collection).child(user).update(data)
             print('data updated!')
-            return render_template('/index.html')
-            
+            return redirect(url_for("main.student_main"))
+
     else:
         print("You have to be logged in first!")
         return redirect(url_for("main.homepage"))
