@@ -23,7 +23,11 @@ def homepage():
 def signup():
     """Return signup template."""
     if request.method == "GET":
+<<<<<<< Updated upstream
         return render_template("signup.html")
+=======
+        return render_template('create_account.html')
+>>>>>>> Stashed changes
     elif request.method == "POST":
         try:
             email = request.form.get("email")
