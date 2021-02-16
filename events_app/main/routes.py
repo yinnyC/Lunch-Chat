@@ -112,12 +112,21 @@ def addSth():
 @main.route('/student_main')
 def student_main():
     if session['user']:
-        # insert the demo user profile feature here
+        token = session['user']  # To access to the currenr user's uid
+        user = auth.get_account_info(token)['users'][0]['localId']
+        collection = "student_profile"
+        user_profile = firebase.database().child(collection).child(user).get()
+        # data = {
+        #     "name": request.form.get("name"),
+        #     "bio": request.form.get("bio"),
+        #     "school": request.form.get("school"),
+        #     "degree": request.form.get("degree"),
+        #     "graduationDate": request.form.get("graduationDate")
+        # }
         return render_template('student_main.html')
     else:
         print("please login first")
         return redirect(url_for("main.homepage"))
-
 
 @main.route('/create_student_profile', methods=['GET', 'POST'])
 def create_student_profile():
@@ -125,19 +134,21 @@ def create_student_profile():
         if request.method == "GET":
             return '''
                 <form action='/create_student_profile' method='POST'>
-                    <input type='text' name='first_name' id='first_name' placeholder='first_name'/>
-                    <input type='text' name='last_name' id='last_name' placeholder='last_name'/>
+                    <input type='text' name='name' id='name' placeholder='name'/>
+                    <textarea type='text' name='bio' id='bio' placeholder='bio'></textarea>
                     <input type='text' name='school' id='school' placeholder='school'/>
-                    <input type='text' name='concentration' id='concentration' placeholder='concentration'/>
+                    <input type='text' name='degree' id='degree' placeholder='degree'/>
+                    <input type='date' name='graduationDate' id='graduationDate' placeholder='graduationDate'/>
                     <input type='submit' name='submit'/>
                 </form>
                 '''
         elif request.method == "POST":
             data = {
-                "first_name": request.form.get("first_name"),
-                "last_name": request.form.get("last_name"),
+                "name": request.form.get("name"),
+                "bio": request.form.get("bio"),
                 "school": request.form.get("school"),
-                "concentration": request.form.get("concentration")
+                "degree": request.form.get("degree"),
+                "graduationDate": request.form.get("graduationDate")
             }
             token = session['user']  # To access to the currenr user's uid
             user = auth.get_account_info(token)['users'][0]['localId']
@@ -158,13 +169,14 @@ def update_student_profile():
         if request.method == "GET":
             return '''
                 <form action='/update_student_profile' method='POST'>
-                        <input type='text' name='first_name' id='first_name' placeholder='first_name'/>
-                        <input type='text' name='last_name' id='last_name' placeholder='last_name'/>
-                        <input type='text' name='school' id='school' placeholder='school'/>
-                        <input type='text' name='concentration' id='concentration' placeholder='concentration'/>
-                        <input type='submit' name='submit'/>
-                    </form>
-                    '''
+                    <input type='text' name='name' id='name' placeholder='name'/>
+                    <textarea type='text' name='bio' id='bio' placeholder='bio'></textarea>
+                    <input type='text' name='school' id='school' placeholder='school'/>
+                    <input type='text' name='degree' id='degree' placeholder='degree'/>
+                    <input type='date' name='graduationDate' id='graduationDate' placeholder='graduationDate'/>
+                    <input type='submit' name='submit'/>
+                </form>
+                '''
 
         elif request.method == "POST":
             data = {
