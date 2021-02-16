@@ -112,7 +112,6 @@ def student_main():
         user = auth.get_account_info(token)['users'][0]['localId']
         collection = "student_profile"
         user_profile = firebase.database().child(collection).child(user).get()
-        print(user_profile.val())
         # data = {
         #     "name": request.form.get("name"),
         #     "bio": request.form.get("bio"),
