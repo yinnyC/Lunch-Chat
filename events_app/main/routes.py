@@ -108,12 +108,22 @@ def addSth():
 @main.route('/student_main')
 def student_main():
     if session['user']:
-        # insert the demo user profile feature here
+        token = session['user']  # To access to the currenr user's uid
+        user = auth.get_account_info(token)['users'][0]['localId']
+        collection = "student_profile"
+        user_profile = firebase.database().child(collection).child(user).get()
+        print(user_profile.val())
+        # data = {
+        #     "name": request.form.get("name"),
+        #     "bio": request.form.get("bio"),
+        #     "school": request.form.get("school"),
+        #     "degree": request.form.get("degree"),
+        #     "graduationDate": request.form.get("graduationDate")
+        # }
         return render_template('student_main.html')
     else:
         print("please login first")
         return redirect(url_for("main.homepage"))
-
 
 @main.route('/create_student_profile', methods=['GET', 'POST'])
 def create_student_profile():
