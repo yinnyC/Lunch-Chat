@@ -70,12 +70,9 @@ def logout():
 @main.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
     if request.method == "GET":
-        return '''
-               <form action='/reset_password' method='POST'>
-                <input type='text' name='email' id='email' placeholder='email'/>
-                <input type='submit' name='submit'/>
-               </form>
-               '''
+        return render_template('forgot_password.html')
+
+               
     elif request.method == "POST":
         # Sending Password reset email
         user_email = request.form.get("email")
