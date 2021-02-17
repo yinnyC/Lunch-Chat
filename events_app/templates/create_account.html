@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block head %}
+<script type="text/javascript" src="{{ url_for('static', filename='/app.js') }}" defer></script>
+{% endblock %}
+{% block content %}
+</div>
+<div class="container position-absolute top-50 start-50 translate-middle"">   
+  <div class="row ">
+      <!--Left side container-->
+      <div class="col-sm-6 border-0">
+        <div class="card border-0">
+          <div class="card-body">
+            <h5 class="card-title">Create Account</h5>
+            <p class="card-text">Create your Lunch Meet account by signing in here!</p>
+            <button type="button" class="btn btn-lg btn-primary" disabled>Email Address</button>
+            <button type="button" class="btn btn-secondary btn-lg" disabled>Get started</button>
+          </div>
+        </div>
+      </div>
+      <!--Right side container with picture holder-->
+      <div class="col-sm-6 ">
+        <div class="card border-0">
+          <div class="card-body">
+              <img src="./events_app/static/img/path-19@1x.png" class="rounded float-end"  alt="...">
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+

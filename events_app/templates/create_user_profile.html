@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Nav Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white pt-5">
+  <a class="navbar-brand ml-5" href="#">Logo</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto mr-5">
+      <li class="nav-item ml-5">
+        <a class="nav-link active" href="/user_main">Demo user profile</a>
+      </li>
+      <li class="nav-item ml-5">
+        <a class="nav-link" href="/create_student_profile">Create student profile <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item ml-5">
+        <a class="nav-link" href="/update_student_profile">Update student profile</a>
+      </li>
+      <li class="nav-item ml-5">
+        <a class="nav-link btn TickleMePink-bg text-white" href="/logout" role="button">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<h1> create_student_profile</h1>
+<form action='/create_student_profile' method='POST'>
+    <input type='text' name='name' id='name' placeholder='name'/>
+    <textarea type='text' name='bio' id='bio' placeholder='bio'></textarea>
+    <input type='text' name='school' id='school' placeholder='school'/>
+    <input type='text' name='degree' id='degree' placeholder='degree'/>
+    <input type='date' name='graduationDate' id='graduationDate' placeholder='graduationDate'/>
+    <input type='submit' name='submit'/>
+</form>
+
+{% endblock %}
