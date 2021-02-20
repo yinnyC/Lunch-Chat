@@ -112,18 +112,20 @@ def student_main():
         user = auth.get_account_info(token)['users'][0]['localId']
         collection = "student_profile"
         user_profile = firebase.database().child(collection).child(user).get()
-        print(user_profile.val())
-        # data = {
-        #     "name": request.form.get("name"),
-        #     "bio": request.form.get("bio"),
-        #     "school": request.form.get("school"),
-        #     "degree": request.form.get("degree"),
-        #     "graduationDate": request.form.get("graduationDate")
-        # }
-        return render_template('student_main.html')
+        user_profile_data = [data.val() for data in user_profile.each()]
+
+        data = {
+            "name": user_profile_data[0]['name'],
+            "bio": user_profile_data[0]['bio'],
+            "school": user_profile_data[0]['school'],
+            "degree": user_profile_data[0]['degree'],
+            "graduationDate": user_profile_data[0]['graduationDate'],
+        }
+        return render_template('student_main.html', **data)
     else:
         print("please login first")
         return redirect(url_for("main.homepage"))
+
 
 @main.route('/create_student_profile', methods=['GET', 'POST'])
 def create_student_profile():
