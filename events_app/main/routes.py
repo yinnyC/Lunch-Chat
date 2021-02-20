@@ -23,7 +23,7 @@ def homepage():
 def signup():
     """Return signup template."""
     if request.method == "GET":
-        return render_template("signup.html")
+        return render_template("create_account.html")
     elif request.method == "POST":
         try:
             email = request.form.get("email")
@@ -36,7 +36,7 @@ def signup():
         except:
             print("could not sign up")
             error = "could not sign up"
-            return render_template('signup.html', error=error)
+            return render_template('create_account.html', error=error)
 
 
 @main.route('/login', methods=["GET", "POST"])
