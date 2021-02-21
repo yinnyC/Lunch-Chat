@@ -7,12 +7,12 @@ from events_app import app, auth, firebase
 
 main = Blueprint("main", __name__)
 
-@main.route("/test_create_user_profile")
-def test_create_user_profile():
+@main.route("/test_recruiter_profile")
+def test_recruiter_profile():
     """
     Return template for create_user_profile.
     """
-    return render_template('create_user_profile.html')
+    return render_template('recruiter_profile.html')
 ##########################################
 #           Routes                       #
 ##########################################
