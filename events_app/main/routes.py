@@ -7,12 +7,15 @@ from events_app import app, auth, firebase
 from events_app.main.utils import getUserID, loginUser, getUserRole
 main = Blueprint("main", __name__)
 
+
 @main.route("/test_recruiter_profile")
 def test_recruiter_profile():
     """
     Return template for create_user_profile.
     """
     return render_template('recruiter_profile.html')
+
+
 ##########################################
 #           Routes                       #
 ##########################################
@@ -52,9 +55,12 @@ def signup():
             userID = getUserID()
             firebase.database().child('Role').child(userID).push(
                 {"role": request.form.get("role")})
-            role = getUserRole()
             print("account created!")
-            return render_template('login.html')
+            role = getUserRole()
+            if role == 'Students':
+                return redirect(url_for("main.create_student_profile"))
+            else:
+                return render_template('login.html')
         except:
             error = "could not sign up"
             return render_template('signup.html', error=error)
@@ -147,16 +153,7 @@ def student_main():
 def create_student_profile():
     if session['user']:  # Check if user has logged in yet
         if request.method == "GET":
-            return '''
-                <form action='/create_student_profile' method='POST'>
-                    <input type='text' name='name' id='name' placeholder='name'/>
-                    <textarea type='text' name='bio' id='bio' placeholder='bio'></textarea>
-                    <input type='text' name='school' id='school' placeholder='school'/>
-                    <input type='text' name='degree' id='degree' placeholder='degree'/>
-                    <input type='date' name='graduationDate' id='graduationDate' placeholder='graduationDate'/>
-                    <input type='submit' name='submit'/>
-                </form>
-                '''
+            return render_template('create_student_profile.html')
         elif request.method == "POST":
             data = {
                 "name": request.form.get("name"),
