@@ -41,7 +41,7 @@ def signup():
     """Return signup template."""
     if request.method == "GET":
         role = session['role']
-        return render_template("signup.html", role=role)
+        return render_template("Auth/signup.html", role=role)
     elif request.method == "POST":
         try:
             email = request.form.get("email")
@@ -60,17 +60,17 @@ def signup():
             if role == 'Students':
                 return redirect(url_for("main.create_student_profile"))
             else:
-                return render_template('login.html')
+                return render_template('Auth/login.html')
         except:
             error = "could not sign up"
-            return render_template('signup.html', error=error)
+            return render_template('Auth/signup.html', error=error)
 
 
 @main.route('/login', methods=["GET", "POST"])
 def login():
     """ Return login template."""
     if request.method == "GET":
-        return render_template('login.html')
+        return render_template('Auth/login.html')
     elif request.method == "POST":
         try:
             email = request.form.get("email")
@@ -95,13 +95,13 @@ def logout():
 @main.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
     if request.method == "GET":
-        return render_template('forgot_password.html')
+        return render_template('Auth/forgot_password.html')
     elif request.method == "POST":
         # Sending Password reset email
         user_email = request.form.get("email")
         reset_email = auth.send_password_reset_email(user_email)
         flash("Please check your email to reset the password")
-        return render_template('forgot_password.html')
+        return render_template('Auth/forgot_password.html')
 
 
 @main.route('/add_sth')
