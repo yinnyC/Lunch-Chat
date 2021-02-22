@@ -7,7 +7,12 @@ from events_app import app, auth, firebase
 from events_app.main.utils import getUserID, loginUser, getUserRole
 main = Blueprint("main", __name__)
 
-
+@main.route("/test_recruiter_profile")
+def test_recruiter_profile():
+    """
+    Return template for create_user_profile.
+    """
+    return render_template('recruiter_profile.html')
 ##########################################
 #           Routes                       #
 ##########################################

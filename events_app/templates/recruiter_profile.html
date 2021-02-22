@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="bg-white">
+
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center py-4">
+          
+        </div>
+        
+      
+        <div class="container">
+          <div class="text-center py-5">
+            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt class="ui-w-100 rounded-circle">
+      
+            <div class="col-md-8 col-lg-6 col-xl-5 p-0 mx-auto">
+              <h4 class="font-weight-bold my-4">Recruiter's Name</h4>
+            </div>
+      
+            <div class="text-center mb-5">
+                <div class="container">
+                    <div class="row">
+                      <div class="col-sm text-muted">
+                        Company
+                      </div>
+                    </div>
+                  </div>
+        </div>
+        <!--three Row information Display-->
+        <!-- <div class="container">
+            <div class="row row-cols-2">
+              <div class="col"><h4 class="font-weight-bold my-4">Job Seeker's Name</h4></div>
+              <div class="col text-muted">School</div>
+              <div class="col text-muted">Your 5 line Elevator Pitch</div>
+              <div class="col text-muted">Degree</div>
+              <div class="col text-muted"></div>
+              <div class="col text-muted">Graduation Date</div>
+            </div>
+          </div> -->
+      
+        <ul class="nav nav-tabs tabs-alt justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link py-4 " href="#">Bio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link py-4" href="#">Open Requisitions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link py-4" href="#">Schedule a Meeting</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link py-4" href="#">Social Media</a>
+          </li>
+        </ul>
+      
+      </div>
+
+      {% endblock %}
