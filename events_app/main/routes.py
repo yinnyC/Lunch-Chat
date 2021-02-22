@@ -5,7 +5,9 @@ from flask import Blueprint, request, render_template, redirect, url_for, sessio
 # Import app and db from events_app package so that we can run app
 from events_app import app, auth, firebase
 from events_app.main.utils import getUserID, loginUser, getUserRole
+
 main = Blueprint("main", __name__)
+student = Blueprint("student", __name__)
 
 
 @main.route("/test_recruiter_profile")
@@ -49,21 +51,20 @@ def signup():
             # Create User Account
             signup_user = auth.create_user_with_email_and_password(
                 email, password)
-            # Login user
-            loginUser(email, password)
-            # Save User's role
-            userID = getUserID()
+            loginUser(email, password)  # Login user
+            userID = getUserID()  # Save User's role with UserID
             firebase.database().child('Role').child(userID).push(
                 {"role": request.form.get("role")})
             print("account created!")
-            role = getUserRole()
+            role = getUserRole()  # Redirect user to create user profile
             if role == 'Students':
-                return redirect(url_for("main.create_student_profile"))
+                return redirect(url_for("student.create_student_profile"))
             else:
                 return render_template('Auth/login.html')
         except:
-            error = "could not sign up"
-            return render_template('Auth/signup.html', error=error)
+            role = session['role']
+            error = "Could not sign up"
+            return render_template("Auth/signup.html", role=role, error=error)
 
 
 @main.route('/login', methods=["GET", "POST"])
@@ -75,10 +76,13 @@ def login():
         try:
             email = request.form.get("email")
             password = request.form.get("password")
-            # To sign in user using email and password
             loginUser(email, password)
+            role = getUserRole()  # Redirect user to create user profile
             flash("sign In Successfully")
-            return redirect(url_for("main.student_main"))
+            if role == 'Students':
+                return redirect(url_for("student.student_main"))
+            else:
+                return redirect(url_for("student.student_main"))
         except:
             error = "Some thing happend!! could not sign in"
             return render_template('login.html', error=error)
@@ -124,86 +128,4 @@ def addSth():
         return render_template('/index.html')
     else:
         print("You need to log in first")
-        return redirect(url_for("main.homepage"))
-
-
-@main.route('/student_main')
-def student_main():
-    if session['user']:
-        token = session['user']  # To access to the currenr user's uid
-        user = auth.get_account_info(token)['users'][0]['localId']
-        collection = "student_profile"
-        user_profile = firebase.database().child(collection).child(user).get()
-        user_profile_data = [data.val() for data in user_profile.each()]
-
-        data = {
-            "name": user_profile_data[0]['name'],
-            "bio": user_profile_data[0]['bio'],
-            "school": user_profile_data[0]['school'],
-            "degree": user_profile_data[0]['degree'],
-            "graduationDate": user_profile_data[0]['graduationDate'],
-        }
-        return render_template('student_main.html', **data)
-    else:
-        print("please login first")
-        return redirect(url_for("main.homepage"))
-
-
-@main.route('/create_student_profile', methods=['GET', 'POST'])
-def create_student_profile():
-    if session['user']:  # Check if user has logged in yet
-        if request.method == "GET":
-            return render_template('create_student_profile.html')
-        elif request.method == "POST":
-            data = {
-                "name": request.form.get("name"),
-                "bio": request.form.get("bio"),
-                "school": request.form.get("school"),
-                "degree": request.form.get("degree"),
-                "graduationDate": request.form.get("graduationDate")
-            }
-            token = session['user']  # To access to the currenr user's uid
-            user = auth.get_account_info(token)['users'][0]['localId']
-            collection = "student_profile"
-            firebase.database().child(collection).child(user).push(data)
-            print('data inserted')
-            return redirect(url_for("main.student_main"))
-
-    else:
-        print("You need to log in first")
-        return redirect(url_for("main.homepage"))
-
-
-@main.route('/update_student_profile', methods=['GET', 'POST'])
-def update_student_profile():
-    """ The function can update data for the student profile """
-    if session['user']:
-        if request.method == "GET":
-            return '''
-                <form action='/update_student_profile' method='POST'>
-                    <input type='text' name='name' id='name' placeholder='name'/>
-                    <textarea type='text' name='bio' id='bio' placeholder='bio'></textarea>
-                    <input type='text' name='school' id='school' placeholder='school'/>
-                    <input type='text' name='degree' id='degree' placeholder='degree'/>
-                    <input type='date' name='graduationDate' id='graduationDate' placeholder='graduationDate'/>
-                    <input type='submit' name='submit'/>
-                </form>
-                '''
-
-        elif request.method == "POST":
-            data = {
-                "first_name": request.form.get("first_name"),
-                "last_name": request.form.get("last_name"),
-                "school": request.form.get("school"),
-                "concentration": request.form.get("concentration")
-            }
-            token = session['user']
-            user = auth.get_account_info(token)['users'][0]['localId']
-            collection = "student_profile"
-            firebase.database().child(collection).child(user).update(data)
-            print('data updated!')
-            return redirect(url_for("main.student_main"))
-
-    else:
-        print("You have to be logged in first!")
         return redirect(url_for("main.homepage"))

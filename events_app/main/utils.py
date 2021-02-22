@@ -20,3 +20,17 @@ def getUserRole():
     role = firebase.database().child("Role").child(user).get()
     role_data = [data.val() for data in role.each()]
     return role_data[0]['role']
+
+
+def getStudentProfile(userID):
+    collection = "student_profile"
+    user_profile = firebase.database().child(collection).child(userID).get()
+    user_profile_data = user_profile.val()
+    data = {
+        "name": user_profile_data['name'],
+        "bio": user_profile_data['bio'],
+        "school": user_profile_data['school'],
+        "degree": user_profile_data['degree'],
+        "graduationDate": user_profile_data['graduationDate'],
+    }
+    return data
