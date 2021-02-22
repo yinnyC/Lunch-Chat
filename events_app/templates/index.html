@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
 <!-- Style -->
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/index.css') }}">
-
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/mainpage.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -28,9 +26,9 @@
                   <a class="nav-link" href="#team-members">Team</a>
               </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-              <a href="#" class="btn primary-btn">Students</a>
-              <a href="#" class="btn secondary-btn">Recruiters</a>
+          <form action="signup_role" class="form-inline my-2 my-lg-0" method="POST">         
+              <input type="submit" name='submit_button' value="Students" class="btn primary-btn">
+              <input type="submit" name='submit_button' value="Recruiters" class="btn secondary-btn">
           </form>
       </div>
   </div>
@@ -43,19 +41,16 @@
               <h1>Meet With Mentors Get Feedback - All virtually.</h1>
               <p class="mt-1 hero-p">Lunch Chat is a video conferencing networking tool that will change the way graduating computer engineers connect with tech recruiters. Quickly schedule informal meetings on recruiter's calendars.
               </p>
-              <div class="mt-1">
-                  <a href="#" class="btn primary-btn">Students</a>
-                  <a href="#" class="btn secondary-btn">Recruiters</a>
-              </div>
+              <form action="signup_role" class="form-inline my-2 my-lg-0" method="POST">         
+                <input type="submit" name='submit_button' value="Students" class="btn primary-btn mr-2">
+                <input type="submit" name='submit_button' value="Recruiters" class="btn secondary-btn">
+              </form>
           </div>
           <div class="col-sm-12 col-lg-6">
-
               <figure class="ie-main-hero">
                 <img src="{{url_for('static', filename='assets/homepage/IMGBG.png')}}" class="img-fluid"/>
               </figure>
-
           </div>
-
       </div>
   </div>
 
@@ -118,7 +113,9 @@
 
               <p class="small mt-4">Connecting with recuriters should be simple, fast, and easy. </p>
           </div>
-          <div class="col-lg-6"> <img src="assets/images/moc-1-1.png" class="img-fluid" alt=""> </div>
+          <div class="col-lg-6"> 
+            <img src="{{url_for('static', filename='assets/homepage/moc-1-1.png')}}" class="img-fluid"/>
+            </div>
       </div>
       <!--/.row-->
   </div>
@@ -262,5 +259,4 @@
       </div>
   </div>
 </section>
-
 {% endblock %}

@@ -20,7 +20,8 @@ auth = firebase.auth()
 # Set up flask app
 app = Flask(__name__)
 app.config.from_object(Config)
-
+app.jinja_env.auto_reload = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 # Set up bluprint - to manage the routing
 from events_app.main.routes import main
 app.register_blueprint(main)

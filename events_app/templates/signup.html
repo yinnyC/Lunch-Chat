@@ -1,28 +1,29 @@
 {% extends 'login-system.html' %}
-
 {% block title %}
 <h1 >
-  <span class="WildBlueYonder">Log In</span>
+  <span class="WildBlueYonder">Sign Up</span>
 </h1>
+<h1>{{role}}</h1>
 {% endblock %}
-
 {% block form %}
 <div class="card mt-3 col-lg-4">
   <div class="card-body">
-    <form action='/login' method='POST'>
+    <form action='/signup' method='POST'>
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
         <input type="email" class="form-control" name='email' id="email">
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" name='password' id="password">
+        <input type="password" class="form-control" name='password' id="password" aria-describedby="passwordHelp">
+        <div id="passwordHelp" class="form-text">Must be at least 7 characters long.</div>
       </div>
+        <input type="text" class="form-control d-none" name='role' id="role" value={{role}}>
       <button type="submit" class="btn TickleMePink-bg ml-auto text-white pull-right">Submit</button>
     </form>
   </div>
 </div>
-  <p class="lead mt-4">
-    Forget password? <a href="/reset_password" class="TickleMePink"> Reset Password</a>
-  </p>  
+<p class="lead mt-4">
+  Already Have An Account? <a href="/login" class="TickleMePink"> Login</a>
+</p>  
 {% endblock %}

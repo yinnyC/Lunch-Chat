@@ -4,7 +4,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, sessio
 
 # Import app and db from events_app package so that we can run app
 from events_app import app, auth, firebase
-
+from events_app.main.utils import getUserID, loginUser, getUserRole
 main = Blueprint("main", __name__)
 
 
@@ -19,24 +19,40 @@ def homepage():
     return render_template('index.html')
 
 
+@main.route("/signup_role", methods=["POST"])
+def signup_role():
+    """
+    According to the role user choose, redirect user to signup page
+    """
+    session['role'] = request.form['submit_button']
+    return redirect(url_for("main.signup"))
+
+
 @main.route('/signup', methods=["GET", "POST"])
 def signup():
     """Return signup template."""
     if request.method == "GET":
-        return render_template("create_account.html")
+        role = session['role']
+        return render_template("signup.html", role=role)
     elif request.method == "POST":
         try:
             email = request.form.get("email")
             password = request.form.get("password")
+            # Create User Account
             signup_user = auth.create_user_with_email_and_password(
                 email, password)
+            # Login user
+            loginUser(email, password)
+            # Save User's role
+            userID = getUserID()
+            firebase.database().child('Role').child(userID).push(
+                {"role": request.form.get("role")})
+            role = getUserRole()
             print("account created!")
-            flash("account created!")
             return render_template('login.html')
         except:
-            print("could not sign up")
             error = "could not sign up"
-            return render_template('create_account.html', error=error)
+            return render_template('signup.html', error=error)
 
 
 @main.route('/login', methods=["GET", "POST"])
@@ -49,14 +65,10 @@ def login():
             email = request.form.get("email")
             password = request.form.get("password")
             # To sign in user using email and password
-            sign_user = auth.sign_in_with_email_and_password(email, password)
-            sign_user = auth.refresh(sign_user['refreshToken'])
-            session['user'] = sign_user['idToken']
-            print("sign In Successfully")
+            loginUser(email, password)
             flash("sign In Successfully")
             return redirect(url_for("main.student_main"))
         except:
-            print("Some thing happend!! could not sign in")
             error = "Some thing happend!! could not sign in"
             return render_template('login.html', error=error)
 
@@ -77,7 +89,6 @@ def reset_password():
         # Sending Password reset email
         user_email = request.form.get("email")
         reset_email = auth.send_password_reset_email(user_email)
-        print("Please check your email to reset the password")
         flash("Please check your email to reset the password")
         return render_template('forgot_password.html')
 
