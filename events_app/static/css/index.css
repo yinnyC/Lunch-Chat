@@ -77,8 +77,11 @@ a:hover {
   color: #1a1a1a;
   text-decoration: none;
 }
-
-.card,
+.container{
+  width: 100%;
+  justify-self: center;
+}
+.card
 .border-top,
 .border-bottom {
   border: 1px solid rgba(202, 210, 214, 0.33) !important;
@@ -237,10 +240,6 @@ Navbar
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
   margin-left: 16px;
-}
-
-.icon-bg {
-  background: url('../images/features-bg.svg')
 }
 
 /*////////////////////////////
@@ -606,10 +605,16 @@ Responsive
   }
 }
 
-@media (min-width: 992px) and (max-width: 1199.98px) {
-  ...
-}
 
-@media (min-width: 1200px) {
-  ...
-}
+@media (max-width: 991.98px) { 
+  .container{
+    max-width:960px;
+  }
+ }
+
+
+@media (max-width: 1199.98px) { 
+  .container{
+    max-width:1140px;
+  }
+ }
