@@ -194,3 +194,34 @@ def update_student_profile():
     else:
         print("You have to be logged in first!")
         return redirect(url_for("main.homepage"))
+
+main.route('/create_recruiter_profile', methods=['GET', 'POST'])
+def create_recruiter_profile():
+    if session['user']:  # Check if user has logged in yet
+        if request.method == "GET":
+            return '''
+                <form action='/create_recruiter_profile' method='POST'>
+                    <input type='text' name='name' id='name' placeholder='name'/>
+                    <textarea type='text' name='bio' id='bio' placeholder='bio'></textarea>
+                    <input type='text' name='company' id='company' placeholder='company'/>
+                    <input type='text' name='position'' id='position'' placeholder='position'/>
+                    <input type='submit' name='submit'/>
+                </form>
+                '''
+        elif request.method == "POST":
+            data = {
+                "name": request.form.get("name"),
+                "bio": request.form.get("bio"),
+                "company": request.form.get("company"),
+                "position": request.form.get("position"),
+            }
+            token = session['user']  # To access to the currenr user's uid
+            user = auth.get_account_info(token)['users'][0]['localId']
+            collection = "recruiter_profile"
+            firebase.database().child(collection).child(user).push(data)
+            print('data inserted')
+            return redirect(url_for("main.student_main"))
+
+    else:
+        print("You need to log in first")
+        return redirect(url_for("main.homepage"))
