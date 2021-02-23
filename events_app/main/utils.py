@@ -8,8 +8,11 @@ from events_app import app, auth, firebase
 ##########################################
 def getUserID():
     token = session['user']  # To access to the currenr user's uid
-    user = auth.get_account_info(token)['users'][0]['localId']
-    return user
+    try:  # To make sure the token is valid
+        user = auth.get_account_info(token)['users'][0]['localId']
+        return user
+    except:  # If the token is invalid, return None and redirect user to login again
+        return None
 
 
 def loginUser(email, password):

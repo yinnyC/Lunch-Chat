@@ -1,0 +1,40 @@
+{% extends 'Auth/login-system.html' %}
+
+{% block title %}
+<img src="{{url_for('static', filename='assets/meeting.svg')}}" class="img-fluid" style="height: auto; width: 250px;"/>
+ <h1 >
+  <span class="WildBlueYonder">Lets Chat!</span>
+ </h1>
+ <p>Connect with leading indusrty recruiters for a quick Chat. Create meanigful professional connections</p>
+{% endblock %}
+
+{% block form %}
+<!-- recruiter and student buttons-->
+<form action="signup_role" method="POST">
+<div class="row mt-4">
+  <div class="col-sm-6">
+    <div class="card"  style="min-height: 180px;">
+      <div class="card-body">
+        <h5 class="card-title">I'm a recruiter</h5>
+        <p class="card-text">Set up available time on your calendar to connect with amazing talent!</p>
+        <input type="submit" name='submit_button' value="Students" class="btn primary-btn pull-right text-white TickleMePink-bg">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card"  style="min-height: 180px;">
+      <div class="card-body">
+        <h5 class="card-title">I'm a job seeker</h5>
+        <p class="card-text">Would you like to schedule a quick meeting with a recruiter?</p>
+        <input type="submit" name='submit_button' value="Recruiters" class="btn pull-right text-white WildBlueYonder-bg mt-4">
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+{% endblock %}
+
+
+
+
+

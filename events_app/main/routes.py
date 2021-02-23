@@ -52,7 +52,10 @@ def signup():
     """
     if request.method == "GET":
         role = session['role']
-        return render_template("Auth/signup.html", role=role)
+        if role == None:
+            return render_template("Auth/re_direct_role.html")
+        else:
+            return render_template("Auth/signup.html", role=role)
     elif request.method == "POST":
         try:
             email = request.form.get("email")
@@ -81,7 +84,7 @@ def signup():
 def login():
     """ Return login template."""
     if request.method == "GET":
-        if session['user']:
+        if session['user'] and getUserID():
             #TODO check user role and redirect to the right page
             return redirect(url_for("student.student_main"))
         else:
@@ -105,7 +108,8 @@ def login():
 @main.route('/logout', methods=["GET", "POST"])
 def logout():
     """ remove the current from the session """
-    session.pop('user', None)
+    session['user'] = None
+    session['role'] = None
     print('You have been logged out')
     return redirect(url_for("main.homepage"))
 
