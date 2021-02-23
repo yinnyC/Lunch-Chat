@@ -3,6 +3,9 @@ from flask import session
 from events_app import app, auth, firebase
 
 
+##########################################
+#         Auth Helper Functions          #
+##########################################
 def getUserID():
     token = session['user']  # To access to the currenr user's uid
     user = auth.get_account_info(token)['users'][0]['localId']
@@ -18,8 +21,13 @@ def loginUser(email, password):
 def getUserRole():
     user = getUserID()
     role = firebase.database().child("Role").child(user).get()
-    role_data = [data.val() for data in role.each()]
-    return role_data[0]['role']
+    role_data = role.val()
+    return role_data['role']
+
+
+##########################################
+#    Student Profile Helper Functions    #
+##########################################
 
 
 def getStudentProfile(userID):
@@ -34,3 +42,8 @@ def getStudentProfile(userID):
         "graduationDate": user_profile_data['graduationDate'],
     }
     return data
+
+
+##########################################
+#   Recruiter Profile Helper Functions   #
+##########################################

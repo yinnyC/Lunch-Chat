@@ -19,12 +19,12 @@ def test_recruiter_profile():
 
 
 ##########################################
-#           Routes                       #
+#          Auth Routes                   #
 ##########################################
 @main.route("/")
 def homepage():
     """
-    Return template for home.
+    Return template for homepage.
     """
     return render_template('index.html')
 
@@ -32,15 +32,24 @@ def homepage():
 @main.route("/signup_role", methods=["POST"])
 def signup_role():
     """
-    According to the role user choose, redirect user to signup page
+    Store the role user picked into session 
+    and redirect user to signup page.
     """
-    session['role'] = request.form['submit_button']
-    return redirect(url_for("main.signup"))
+    if session['user']:
+        return redirect(url_for("main.login"))
+    else:
+        session['role'] = request.form['submit_button']
+        return redirect(url_for("main.signup"))
 
 
 @main.route('/signup', methods=["GET", "POST"])
 def signup():
-    """Return signup template."""
+    """ 
+    Get method: Return signup template 
+    and pass the role user choosed to template
+    POST method:Create an account, store user role to db 
+    and redirect to create profile page
+    """
     if request.method == "GET":
         role = session['role']
         return render_template("Auth/signup.html", role=role)
@@ -51,15 +60,16 @@ def signup():
             # Create User Account
             signup_user = auth.create_user_with_email_and_password(
                 email, password)
-            loginUser(email, password)  # Login user
-            userID = getUserID()  # Save User's role with UserID
-            firebase.database().child('Role').child(userID).push(
+            loginUser(email, password)  # Login user to create session
+            userID = getUserID()  # Save User's role with UserID to db
+            firebase.database().child('Role').child(userID).update(
                 {"role": request.form.get("role")})
             print("account created!")
-            role = getUserRole()  # Redirect user to create user profile
+            role = getUserRole()  # Redirect user to create profile
             if role == 'Students':
                 return redirect(url_for("student.create_student_profile"))
             else:
+                #TODO add create recruiter profile page and route
                 return render_template('Auth/login.html')
         except:
             role = session['role']
@@ -71,7 +81,11 @@ def signup():
 def login():
     """ Return login template."""
     if request.method == "GET":
-        return render_template('Auth/login.html')
+        if session['user']:
+            #TODO check user role and redirect to the right page
+            return redirect(url_for("student.student_main"))
+        else:
+            return render_template('Auth/login.html')
     elif request.method == "POST":
         try:
             email = request.form.get("email")
@@ -110,7 +124,7 @@ def reset_password():
 
 @main.route('/add_sth')
 def addSth():
-    """ The function can write data into certain collection and user uid"""
+    """ The function is an example of how to insert data in the firebase realtimeDB"""
     if session['user']:  # Check if user has logged in yet
         token = session['user']  # To access to the currenr user's uid
         user = auth.get_account_info(token)['users'][0]['localId']
@@ -123,7 +137,7 @@ def addSth():
                     | - data you want to safe
         """
         collection = "profile"
-        firebase.database().child(collection).child(user).push(data)
+        firebase.database().child(collection).child(user).update(data)
         print('data inserted')
         return render_template('/index.html')
     else:

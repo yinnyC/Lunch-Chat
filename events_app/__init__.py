@@ -25,5 +25,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 # Set up bluprint - to manage the routing
 from events_app.main.routes import main
 from events_app.main.student_routes import student
+from events_app.main.recruiter_routes import recruiter
 app.register_blueprint(main)
 app.register_blueprint(student)
+app.register_blueprint(recruiter)

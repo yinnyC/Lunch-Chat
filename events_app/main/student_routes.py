@@ -4,22 +4,17 @@ from flask import Blueprint, request, render_template, redirect, url_for, sessio
 
 # Import app and db from events_app package so that we can run app
 from events_app import app, auth, firebase
-from events_app.main.utils import getUserID, getUserRole, getStudentProfile
+from events_app.main.utils import getUserID, getStudentProfile
 
 student = Blueprint("student", __name__)
 main = Blueprint("main", __name__)
 
 
-@student.route("/student/chooserole")
-def chooserole():
-    """
-    Return template for create_user_profile.
-    """
-    return render_template('re_direct_student_recruiter.html')
-
-
 @student.route('/student/main')
 def student_main():
+    """
+    Return template for student profile.
+    """
     if session['user']:
         user = getUserID()  # To access to the currenr user's uid
         data = getStudentProfile(user)
@@ -31,6 +26,9 @@ def student_main():
 
 @student.route('/student/create_profile', methods=['GET', 'POST'])
 def create_student_profile():
+    """
+    Return template for create_student_profile and Store data to firebase
+    """
     if session['user']:  # Check if user has logged in yet
         if request.method == "GET":
             return render_template('Students/create_profile.html')
