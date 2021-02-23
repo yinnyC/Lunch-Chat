@@ -2,7 +2,7 @@
 
 <!-- Tilte  -->
 {% block title %}
-<h1> Student Profile</h1>
+<h1 class="text-center mt-5"> Student Profile</h1>
 {% endblock %}
 
 <!-- Hero -->
@@ -10,7 +10,7 @@
 <div class="card mt-3 col-lg-6">
   <div class="card-body">
     <form>
-      <div class="form-row">
+      <div class="row g-3">
         <div class="col">
           <label for="name" class="form-label">Name</label>
           <input type="text" class="form-control" name='name' value="{{name}}" disabled>
@@ -20,7 +20,7 @@
         <input type="text" class="form-control" name='school' value={{school}} disabled>
         </div>
       </div>
-      <div class="form-row">
+      <div class="row g-3">
         <div class="col">
           <label for="degree" class="form-label">Degree</label>
           <input type="text" class="form-control" name='degree' value={{degree}} disabled>
@@ -33,7 +33,7 @@
         <label for="bio">Bio</label>
         <textarea class="form-control" id="bio" rows="3" name="bio" disabled>{{bio}}</textarea>
       </div>
-      <a href="/student/update_profile" class="btn TickleMePink-bg ml-auto mb-3 text-white pull-right">Edit</a>
+      <a href="/student/update_profile" class="btn TickleMePink-bg ms-auto mb-3 text-white pull-right">Edit</a>
     </form>
     </div>
   </div>

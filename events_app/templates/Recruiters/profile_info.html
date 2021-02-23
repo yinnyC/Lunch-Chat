@@ -1,0 +1,56 @@
+{% extends 'Recruiters/recruiter_main.html' %}
+
+<!-- Tilte  -->
+{% block title %}
+<h1 class="text-center"> Recruiter Profile</h1>
+{% endblock %}
+
+<!-- Hero -->
+{% block form %}
+<div class="card mt-3 col-lg-6">
+  <div class="card-body">
+    <form>
+      <div class="row g-3">
+        <div class="col">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" name='name' value="{{name}}" disabled>
+        </div>
+        <div class="col">
+          <label for="company" class="form-label">Company</label>
+        <input type="text" class="form-control" name='company' value="{{company}}" disabled>
+        </div>
+        <div class="col">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" name='title' value="{{title}}" disabled>
+        </div>
+      </div>
+      <div class="row g-3 mt-1 mb-2">
+        <div class="col">
+          <label for="talent" class="form-label">Talents we are looking for</label>
+          <input type="text" class="form-control" name='degree' value="{{degree}}" disabled>
+        </div>
+      </div>
+        <label for="bio">Bio</label>
+        <textarea class="form-control" id="bio" rows="3" name="bio" disabled>{{bio}}</textarea>
+      </div>
+      <a href="/recruiter/update_profile" class="btn TickleMePink-bg ms-auto mb-3 text-white pull-right">Edit</a>
+    </form>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   

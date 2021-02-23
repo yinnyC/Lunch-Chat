@@ -71,8 +71,9 @@ def signup():
             role = getUserRole()  # Redirect user to create profile
             if role == 'Students':
                 return redirect(url_for("student.create_student_profile"))
+            elif role == 'Recruiters':
+                return redirect(url_for("recruiter.create_recruiter_profile"))
             else:
-                #TODO add create recruiter profile page and route
                 return render_template('Auth/login.html')
         except:
             role = session['role']
@@ -85,8 +86,13 @@ def login():
     """ Return login template."""
     if request.method == "GET":
         if session['user'] and getUserID():
-            #TODO check user role and redirect to the right page
-            return redirect(url_for("student.student_main"))
+            role = session['role']
+            if role == 'Students':
+                return redirect(url_for("student.student_main"))
+            elif role == 'Recruiters':
+                return redirect(url_for("recruiter.recruiter_main"))
+            else:
+                return render_template('Auth/login.html')
         else:
             return render_template('Auth/login.html')
     elif request.method == "POST":
