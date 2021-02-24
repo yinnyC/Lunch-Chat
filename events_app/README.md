@@ -45,6 +45,6 @@ Run these on your terminal
 
 | Skateboard (1 feature) | Bike (2nd feature)     | Car (Extras)           |
 | :--------------------- | :--------------------- | :--------------------- |
-| Build a login system and allow users to create a profile, and to request meeting dates| Users and recruiters to browse user profiles |  Allow users to select time slots on calendars, and  automatically set up meeting appointments
+| Build a login system and allow users to create a profile, and to request meeting dates| Users and recruiters to browse user profiles |  Allow users to select time slots on calendars, and  automatically set up meeting appointments.
 
 
