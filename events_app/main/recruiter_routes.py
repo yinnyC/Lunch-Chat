@@ -5,7 +5,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, sessio
 
 # Import app and db from events_app package so that we can run app
 from events_app import app, auth, firebase
-from events_app.main.utils import getUserID
+from events_app.main.utils import getUserID, getRecruiterProfile
 
 recruiter = Blueprint("recruiter", __name__)
 main = Blueprint("main", __name__)
@@ -18,8 +18,8 @@ def recruiter_main():
     """
     if session['user']:
         user = getUserID()  # To access to the currenr user's uid
-        # data = getStudentProfile(user)
-        return render_template('Recruiters/profile_info.html')
+        data = getRecruiterProfile(user)
+        return render_template('Recruiters/profile_info.html', **data )
     else:
         print("please login first")
         return redirect(url_for("main.homepage"))
