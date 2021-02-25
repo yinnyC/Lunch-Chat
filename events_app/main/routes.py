@@ -225,3 +225,16 @@ def create_recruiter_profile():
     else:
         print("You need to log in first")
         return redirect(url_for("main.homepage"))
+
+@recruiter.route('/recruiter/main')
+def recruiter_main():
+    """
+    Return template for recruiter profile.
+    """
+    if session['user']:
+        user = getUserID()  # To access to the current user's id
+        data = getRecruiterProfile(user)
+        return render_template('recruiter_main.html', **data)
+    else:
+        print("please login first")
+        return redirect(url_for("main.homepage"))
