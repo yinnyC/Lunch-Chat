@@ -50,3 +50,17 @@ def getStudentProfile(userID):
 ##########################################
 #   Recruiter Profile Helper Functions   #
 ##########################################
+
+
+def getRecruiterProfile(userID):
+    collection = "recruiter_profile"
+    user_profile = firebase.database().child(collection).child(userID).get()
+    user_profile_data = user_profile.val()
+    data = {
+        "name": user_profile_data['name'],
+        "bio": user_profile_data['bio'],
+        "company": user_profile_data['company'],
+        "title": user_profile_data['title'],
+        "talent": user_profile_data['talent'],
+    }
+    return data

@@ -9,7 +9,7 @@ To make sure you all have the required library installed and not messing with ou
     pip3 install virtualenv
     python3 -m venv env
     source env/bin/activate
-    pip3 install -r requirement
+    pip3 install -r requirements.txt
 
 ## 2. Project Structure
 
