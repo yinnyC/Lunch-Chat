@@ -105,7 +105,7 @@ def login():
             if role == 'Students':
                 return redirect(url_for("student.student_main"))
             else:
-                return redirect(url_for("student.student_main"))
+                return redirect(url_for("recruiter.recruiter_main"))
         except:
             error = "Some thing happend!! could not sign in"
             return render_template('login.html', error=error)

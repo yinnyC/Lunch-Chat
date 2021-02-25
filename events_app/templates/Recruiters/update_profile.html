@@ -1,0 +1,54 @@
+{% extends 'Students/student_main.html' %}
+
+<!-- Tilte  -->
+{% block title %}
+<h1 class="text-center mt-5">Edit Profile</h1>
+{% endblock %}
+
+<!-- Hero -->
+{% block form %}
+<div class="card mt-3 col-lg-6">
+  <div class="card-body">
+    <form action='/recruiter/update_profile' method='POST'>
+      <div class="row g-3">
+        <div class="col">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" name='name' value="{{name}}">
+        </div>
+        <div class="col">
+          <label for="school" class="form-label">School</label>
+        <input type="text" class="form-control" name='school' value={{school}}>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col">
+          <label for="degree" class="form-label">Degree</label>
+          <input type="text" class="form-control" name='degree' value={{degree}}>
+        </div>
+        <div class="col">
+          <label for="graduationDate" class="form-label">Graduation Date</label>
+          <input type="date" class="form-control" name='graduationDate' value={{graduationDate}}>
+        </div>
+      </div>
+        <label for="bio">Bio</label>
+        <textarea class="form-control" id="bio" rows="3" name="bio">{{bio}}</textarea>
+      </div>
+      <button type="submit" class="btn TickleMePink-bg ms-auto text-white pull-right mb-3">Submit</button>
+    </form>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
