@@ -26,6 +26,7 @@ def homepage():
     """
     Return template for homepage.
     """
+    session['user'] = ""
     return render_template('index.html')
 
 
@@ -108,7 +109,7 @@ def login():
                 return redirect(url_for("recruiter.recruiter_main"))
         except:
             error = "Some thing happend!! could not sign in"
-            return render_template('login.html', error=error)
+            return render_template('Auth/login.html', error=error)
 
 
 @main.route('/logout', methods=["GET", "POST"])
