@@ -58,10 +58,18 @@ def update_recruiter_profile():
             data = getRecruiterProfile(user)
             return render_template('Recruiters/update_profile.html', **data)
         elif request.method == "POST":
-
-            #TODO: check the update_student_profile route
-            # and implement one for recruiter
-            pass
+            data = {
+                "name": request.form.get("name"),
+                "bio": request.form.get("bio"),
+                "company": request.form.get("company"),
+                "title": request.form.get("title"),
+                "talent": request.form.get("talent"),
+            }
+            user = getUserID()
+            firebase.database().child("recruiter_profile").child(user).update(
+                data)
+            print('data updated!')
+            return redirect(url_for("recruiter.recruiter_main"))
     else:
         print("You have to be logged in first!")
         return redirect(url_for("main.homepage"))
