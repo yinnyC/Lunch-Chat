@@ -3,6 +3,8 @@
 
 Lunch Chat is a video conferencing networking tool that will change the way computer engineers connect with tech recruiters. This project is a platform that allows students to schedule quick and informal meetings on recruiters' calendars. Break down barriers, make connections and finally, get recomendations to job opportunities that really fit!
 
+# Built by: Andrea Graziosi, Daniel Duque, Liz Stangle, Shahir Ali, Yin Chang
+
 ## Technologies:
 
 - Flask -  A python based server-side architecture used for url routing.
