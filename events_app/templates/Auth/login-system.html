@@ -29,10 +29,12 @@
 <!-- Jumbotron -->
 <div class="jumbotron bg-white">
   <div class="row align-items-center flex-column">
+
     {% block title %}
     {% endblock %}
+
     {% if error %}
-    <p class="error mt-4"><strong>Error:</strong> {{ error }}
+      <p class="error text-center mt-4"><strong>Error:</strong> {{ error }}
     {% endif %}
 
     {% block form %}

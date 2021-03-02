@@ -75,3 +75,17 @@ def update_student_profile():
     else:
         print("You have to be logged in first!")
         return redirect(url_for("main.homepage"))
+
+
+@student.route('/student/show_recruiters')
+def show_recruiters():
+    """
+    Return template for student profile.
+    """
+    if session['user']:
+        recruiter_profile = firebase.database().child('recruiter_profile').get()
+        recruiter_profile = [recruiter.val() for recruiter in recruiter_profile.each()]
+        return render_template('Students/recruiter_grid.html', recruiter_profile= recruiter_profile)
+    else:
+        print("please login first")
+        return redirect(url_for("main.homepage"))

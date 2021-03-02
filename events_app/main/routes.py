@@ -26,7 +26,8 @@ def homepage():
     """
     Return template for homepage.
     """
-    session['user'] = ""
+    if 'user' not in session:
+        session['user'] = ""
     return render_template('index.html')
 
 
@@ -89,9 +90,9 @@ def login():
         if session['user'] and getUserID():
             role = session['role']
             if role == 'Students':
-                return redirect(url_for("student.student_main"))
+                return redirect(url_for("student.show_recruiters"))
             elif role == 'Recruiters':
-                return redirect(url_for("recruiter.recruiter_main"))
+                return redirect(url_for("recruiter.show_students"))
             else:
                 return render_template('Auth/login.html')
         else:
@@ -104,9 +105,9 @@ def login():
             role = getUserRole()  # Redirect user to create user profile
             flash("sign In Successfully")
             if role == 'Students':
-                return redirect(url_for("student.student_main"))
+                return redirect(url_for("student.show_recruiters"))
             else:
-                return redirect(url_for("recruiter.recruiter_main"))
+                return redirect(url_for("recruiter.show_students"))
         except:
             error = "Some thing happend!! could not sign in"
             return render_template('Auth/login.html', error=error)
